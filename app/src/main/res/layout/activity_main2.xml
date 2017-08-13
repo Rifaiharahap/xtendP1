@@ -12,27 +12,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/profile"
-        android:visibility="visible">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EEEEEE"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <ListView
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="68dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="469dp"
            android:id="@+id/listview"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="#66757575">
 
-        <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+<TextView
+    android:layout_marginLeft="120dp"
+    android:fontFamily="sans-serif"
+    android:textStyle="bold"
+    android:textSize="20sp"
+    android:textColor="#000000"
+    android:layout_gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Assignment"
+    android:textAlignment="center" />
+</LinearLayout>
 
 
     </RelativeLayout>
@@ -45,27 +50,30 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/home"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/home">
+        android:layout_toEndOf="@+id/profile">
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginLeft="70dp"
-            android:layout_marginTop="5dp"
-            design:srcCompat="@drawable/xtend"/>
+            design:srcCompat="@drawable/xtend"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="22sp"
-            android:layout_marginTop="63dp"
             android:layout_marginLeft="210dp"
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="XTEND" />
+            android:text="XTEND"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/imageView3"
+            android:layout_centerHorizontal="true" />
         <TextView
             android:textAlignment="center"
             android:textStyle="bold"
@@ -76,18 +84,21 @@
             android:textSize="30sp"
             android:text="Welcome"
             android:id="@+id/textView2"
-            android:layout_marginTop="180dp"/>
+            android:layout_marginTop="54dp"
+            android:layout_below="@+id/textView5"
+            android:layout_alignParentStart="true" />
 
 
         <TextView
-            android:layout_marginTop="250dp"
             android:fontFamily="sans-serif"
             android:textSize="27sp"
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Muhammad Rifai"
-            android:layout_centerHorizontal="true" />
+            android:text="Francis Y Seaw"
+            android:layout_marginTop="49dp"
+            android:layout_below="@+id/textView2"
+            android:layout_alignStart="@+id/textView4" />
 
         <TextView
             android:textAlignment="center"
@@ -95,21 +106,104 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MICROSOFT CORPORATION"
+            android:text="Xtend President"
+            android:layout_marginTop="27dp"
             android:layout_below="@+id/textView3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="91dp" />
+            android:layout_centerHorizontal="true" />
 
 
 
     </RelativeLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:id="@+id/menubawah"
+        android:visibility="visible"
         android:layout_alignParentBottom="true"
-        design:menu="@menu/bottom_navigation_main"/>
+        android:layout_alignParentStart="true"
+        android:background="#66ffffff">
+
+        <ImageView
+            android:layout_marginLeft="219dp"
+            android:id="@+id/imgurgent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            design:srcCompat="@drawable/ic_action_urgent" />
+
+        <ImageView
+            android:visibility="visible"
+            android:id="@+id/imgtugas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            design:srcCompat="@drawable/ic_assignment"
+            android:layout_marginLeft="119dp"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/imgtugas2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            design:srcCompat="@drawable/ic_assignment2"
+            android:layout_marginLeft="119dp"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_marginLeft="22dp"
+        android:id="@+id/imghome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        design:srcCompat="@drawable/ic_home" />
+
+        <ImageView
+            android:visibility="visible"
+            android:layout_marginLeft="22dp"
+            android:id="@+id/imghome2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            design:srcCompat="@drawable/ic_home2" />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/txthome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home" />
+
+        <TextView
+            android:id="@+id/txttugas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assignment"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="100dp"/>
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:id="@+id/txturgent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urgent"
+            android:layout_marginLeft="215dp"/>
+
+        <ImageView
+            android:layout_marginRight="9dp"
+            android:id="@+id/imgset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            design:srcCompat="@drawable/ic_setting"
+            android:layout_marginLeft="308dp"/>
+
+        <TextView
+            android:id="@+id/txtset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="300dp"/>
+    </RelativeLayout>
+
 
 
 

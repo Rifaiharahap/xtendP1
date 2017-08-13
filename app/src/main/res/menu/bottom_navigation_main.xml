@@ -13,17 +13,24 @@
     <item
         android:id="@+id/action_Ticket"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name"
-        android:title="Assignment"
+        android:icon="@drawable/ic_assignment"
+        android:title="@string/assigment"
+        app:showAsAction="ifRoom"
+        />
+    <item
+
+        android:id="@+id/action_urgent"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_urgent"
+        android:title="Urgent Assignment"
         app:showAsAction="ifRoom"
         />
     <item
         android:id="@+id/action_setting"
         android:enabled="true"
         android:icon="@drawable/ic_setting"
-        android:title="Setting"
+        android:title="@string/setting"
         app:showAsAction="ifRoom"
         />
-
 
 </menu>

@@ -18,10 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main2Activity"
-            android:screenOrientation="portrait">
-
-        </activity>
+        <activity
+            android:name=".Main2Activity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Main3Activity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Main4Activity"
+            android:screenOrientation="portrait" />/>
+        <activity android:name=".pegawai"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

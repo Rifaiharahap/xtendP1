@@ -19,16 +19,17 @@ import android.widget.TextView;
 public class CustomListview extends ArrayAdapter<String> {
     private String[] judul;
     private String[] keterangan;
-    private Integer[] imgid;
+    private String[] time;
     private Activity context;
-    public CustomListview(Activity context, String[] judul,String[] keterangan,Integer[] imgid) {
+    public CustomListview(Activity context, String[] judul,String[] keterangan, String[] time) {
         super(context, R.layout.listview_layout,judul);
 
 
         this.context=context;
         this.judul=judul;
         this.keterangan=keterangan;
-        this.imgid=imgid;
+        this.time=time;
+
     }
 
     @NonNull
@@ -45,21 +46,21 @@ public class CustomListview extends ArrayAdapter<String> {
      else{
             viewHolder= (ViewHolder) r.getTag();
         }
-        viewHolder.ivw.setImageResource(imgid[position]);
         viewHolder.tvw1.setText(judul[position]);
         viewHolder.tvw2.setText(keterangan[position]);
+        viewHolder.tvw3.setText(time[position]);
         return r;
     }
     class ViewHolder
     {
         TextView tvw1;
         TextView tvw2;
-        ImageView ivw;
+        TextView tvw3;
         ViewHolder(View v)
         {
             tvw1 = (TextView) v.findViewById(R.id.judul);
             tvw2 = (TextView) v.findViewById(R.id.keterangan);
-            ivw = (ImageView) v.findViewById(R.id.gambar);
+            tvw3 = (TextView) v.findViewById(R.id.time);
         }
 
     }
