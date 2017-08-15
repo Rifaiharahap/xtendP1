@@ -1,19 +1,15 @@
 package com.example.xyzskylake.extend;
 
-import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.xyzskylake.extend.Listview.CustomListview;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -32,7 +28,7 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.home_main);
         imgtugas = (ImageView)findViewById(R.id.imgtugas);
         imgtugas2 = (ImageView)findViewById(R.id.imgtugas2);
         imghome = (ImageView)findViewById(R.id.imghome);
