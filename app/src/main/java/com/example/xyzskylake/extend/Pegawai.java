@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.example.xyzskylake.extend.Listview.CustomListPegawai;
+
 public class pegawai extends AppCompatActivity {
     ListView lst2;
     String[] namapegawai = {"Perbaikan Pegawai", "Absensi Harian"};
