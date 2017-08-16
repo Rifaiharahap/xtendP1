@@ -33,9 +33,6 @@
             android:name=".HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DetailTicketActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Main4Activity"
             android:screenOrientation="portrait" />
         />
