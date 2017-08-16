@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     public void onClick(View v)
                     {
-                        Intent myIntent = new Intent(v.getContext(),Main2Activity.class);
+                        Intent myIntent = new Intent(v.getContext(),HomeActivity.class);
                         startActivity(myIntent);
                     }
                 }
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         RegisterCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Main4Activity.class));
+                startActivity(new Intent(MainActivity.this,SignUpActivity.class));
             }
         });
 

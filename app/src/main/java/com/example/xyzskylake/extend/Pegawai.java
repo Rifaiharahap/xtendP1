@@ -1,12 +1,14 @@
 package com.example.xyzskylake.extend;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.xyzskylake.extend.Listview.CustomListPegawai;
 
-public class pegawai extends AppCompatActivity {
+public class Pegawai extends AppCompatActivity {
     ListView lst2;
     String[] namapegawai = {"Perbaikan Pegawai", "Absensi Harian"};
     String[] jabatan = {"Perbaikan jalur kereta api di daera Kota Medan", "Absen hari sabtu"};

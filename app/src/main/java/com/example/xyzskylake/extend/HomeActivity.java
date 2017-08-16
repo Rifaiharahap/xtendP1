@@ -1,17 +1,20 @@
 package com.example.xyzskylake.extend;
 
+import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.xyzskylake.extend.Listview.CustomListview;
+import com.example.xyzskylake.extend.Maps.DetailTicket;
 
-public class Main2Activity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     TextView txthome,txttugas;
     ImageView imghome,imghome2,imgtugas,imgtugas2;
@@ -103,6 +106,12 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
+        lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(HomeActivity.this,DetailTicket.class));
+            }
+        });
 
 
     }

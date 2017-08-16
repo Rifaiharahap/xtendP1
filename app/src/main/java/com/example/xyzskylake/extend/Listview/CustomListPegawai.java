@@ -1,4 +1,4 @@
-package com.example.xyzskylake.extend;
+package com.example.xyzskylake.extend.Listview;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.xyzskylake.extend.R;
 
 /**
  * Created by XYZ Skylake on 08/08/2017.
@@ -21,7 +23,7 @@ public class CustomListPegawai extends ArrayAdapter<String>{
     private Integer[] imgid;
 
     public CustomListPegawai(Activity context, String[] namapegawai, String[] jabatan, Integer[] imgid) {
-        super(context, R.layout.listview_pegawai,namapegawai);
+        super(context, R.layout.listview_profil,namapegawai);
 
 
         this.context=context;
@@ -36,7 +38,7 @@ public class CustomListPegawai extends ArrayAdapter<String>{
         ViewHolder viewHolder=null;
         if (r==null){
             LayoutInflater layoutInflater = context.getLayoutInflater();
-            r=layoutInflater.inflate(R.layout.listview_pegawai,null,true );
+            r=layoutInflater.inflate(R.layout.listview_profil,null,true );
             viewHolder= new ViewHolder(r);
             r.setTag(viewHolder);
         }

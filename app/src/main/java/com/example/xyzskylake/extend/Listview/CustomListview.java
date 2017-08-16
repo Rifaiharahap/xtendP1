@@ -1,16 +1,15 @@
-package com.example.xyzskylake.extend;
+package com.example.xyzskylake.extend.Listview;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.xyzskylake.extend.R;
 
 /**
  * Created by XYZ Skylake on 07/08/2017.
@@ -22,7 +21,7 @@ public class CustomListview extends ArrayAdapter<String> {
     private String[] time;
     private Activity context;
     public CustomListview(Activity context, String[] judul,String[] keterangan, String[] time) {
-        super(context, R.layout.listview_layout,judul);
+        super(context, R.layout.listview_ticket,judul);
 
 
         this.context=context;
@@ -39,7 +38,7 @@ public class CustomListview extends ArrayAdapter<String> {
         ViewHolder viewHolder=null;
         if (r==null){
             LayoutInflater layoutInflater = context.getLayoutInflater();
-            r=layoutInflater.inflate(R.layout.listview_layout,null,true );
+            r=layoutInflater.inflate(R.layout.listview_ticket,null,true );
             viewHolder= new ViewHolder(r);
              r.setTag(viewHolder);
         }
