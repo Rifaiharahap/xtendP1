@@ -8,10 +8,10 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.xyzskylake.extend.Utils.DirectionsJSONParser;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -42,6 +41,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,7 +66,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    TextView durdis;
+    TextView TVduration,TVdistance;
     Button refresh;
 
     @Override
@@ -93,8 +93,10 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //lat = 3.592691;
-        //lng = 98.669417;
+        lat = 3.567365;
+        lng = 98.657040;
+        final Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
         // Add a marker in Sydney and move the camera
         /*
         LatLng sydney = new LatLng(-34, 151);
@@ -103,6 +105,8 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         */
 
         refresh = (Button)findViewById(R.id.RefreshLocation);
+        TVduration = (TextView)findViewById(R.id.Duration);
+        TVdistance = (TextView)findViewById(R.id.Distance);
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,12 +120,59 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                mMap.snapshot(new GoogleMap.SnapshotReadyCallback(){
+
+                    @Override
+                    public void onSnapshotReady(Bitmap bitmap) {
+
+                        /*View v1 = getWindow().getDecorView().getRootView();
+                        v1.setDrawingCacheEnabled(true);
+                        bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+                        v1.setDrawingCacheEnabled(true);*/
+                        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+                        File imageFile = new File(mPath);
+
+                        try {
+                            FileOutputStream outputStream = new FileOutputStream(imageFile);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+                            outputStream.flush();
+                            outputStream.close();
+
+                            // Write the string to the file
+                        }
+                        catch (FileNotFoundException e)
+                        {
+                            // TODO Auto-generated catch block
+                            Log.d("ImageCapture", "FileNotFoundException");
+                            Log.d("ImageCapture", e.getMessage());
+                            mPath = "";
+                        }
+                        catch (IOException e)
+                        {
+                            // TODO Auto-generated catch block
+                            Log.d("ImageCapture", "IOException");
+                            Log.d("ImageCapture", e.getMessage());
+                            mPath = "";
+                        }
+
+                    }
+                });
+
+            }
+        });
+
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
+                //ActivityCompat.requestPermissions(ShowLocation.this
+                //,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                  //              ,Manifest.permission.ACCESS_FINE_LOCATION},1);
             } // disini isi kan modal untuk grant permission, callback nya ke onPermission
         } else {
             buildGoogleApiClient();
@@ -129,13 +180,13 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        Log.e("GoogleApiClient", "GoogleApi" + mGoogleApiClient);
         mGoogleApiClient.connect();
     }
 
@@ -151,7 +202,6 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                 == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
-
     }
 
     @Override
@@ -168,6 +218,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         }
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         Postion(latLng);
+        GetSnapShot();
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -338,8 +389,9 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
 // Drawing polyline in the Google Map for the i-th route
             Log.i("Distance & Duration", distance + " " + duration);
-            durdis.setText("Distance " + distance +
-                    " Duration " + duration);
+            TVdistance.setText("Distance :" + distance );
+            TVduration.setText("Duration : " + duration);
+
             mMap.addPolyline(lineOptions);
         }
     }
@@ -496,26 +548,58 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void GetSnapShot() {
-        Date now = new Date();
+        final Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
         //MapView mapView = (MapView)findViewById(R.id.map);
         // mapView.buildDrawingCache();
 
         try {
-            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
-            View v1 = getWindow().getDecorView().getRootView();
-            v1.setDrawingCacheEnabled(true);
-            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-            v1.setDrawingCacheEnabled(false);
+                GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback()
+                {
+                    @Override
+                    public void onSnapshotReady(Bitmap snapshot)
+                    {
+                        // TODO Auto-generated method stub
+                        Bitmap bitmap = snapshot;
 
-            File imageFile = new File(mPath);
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
-            int quality = 100;
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-            outputStream.flush();
-            outputStream.close();
+                        //String filePath = System.currentTimeMillis() + ".jpeg";
+                        View v1 = getWindow().getDecorView().getRootView();
+                        v1.setDrawingCacheEnabled(true);
+                        bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+                        v1.setDrawingCacheEnabled(true);
+                        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+                        File imageFile = new File(mPath);
 
-            //GetSnapShot(imageFile);
+                        try {
+                            FileOutputStream outputStream = new FileOutputStream(imageFile);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+                            outputStream.flush();
+                            outputStream.close();
+
+                            // Write the string to the file
+                        }
+                        catch (FileNotFoundException e)
+                        {
+                            // TODO Auto-generated catch block
+                            Log.d("ImageCapture", "FileNotFoundException");
+                            Log.d("ImageCapture", e.getMessage());
+                            mPath = "";
+                        }
+                        catch (IOException e)
+                        {
+                            // TODO Auto-generated catch block
+                            Log.d("ImageCapture", "IOException");
+                            Log.d("ImageCapture", e.getMessage());
+                            mPath = "";
+                        }
+
+                        //openShareImageDialog(filePath);
+                    }
+                };
+
+                mMap.snapshot(callback);
+
+            //createImage(imageFile);
         } catch (Throwable e) {
             // Several error may come out with file handling or DOM
             e.printStackTrace();
