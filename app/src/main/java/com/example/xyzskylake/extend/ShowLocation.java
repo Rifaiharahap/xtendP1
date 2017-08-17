@@ -6,10 +6,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -39,7 +41,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -61,13 +62,16 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         LocationListener {
 
     private GoogleMap mMap;
-    double lat, lng;
+    double lat, lng, currentlocation, destination;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     TextView TVduration,TVdistance;
     Button refresh;
+    int ValueButton;
+    int TAKE_PHOTO_CODE = 0;
+    public static int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        ValueButton = 0;
         lat = 3.567365;
         lng = 98.657040;
         final Date now = new Date();
@@ -111,12 +116,19 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ValueButton == 0){
                 Intent intent = getIntent();
                 overridePendingTransition(0, 0);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 finish();
                 overridePendingTransition(0, 0);
                 startActivity(intent);
+                } else {
+
+                    //mMap.setMyLocationEnabled(false);
+                    startActivity(new Intent(ShowLocation.this,InputData.class));
+
+                }
             }
         });
 
@@ -165,18 +177,29 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         });
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient();
-                mMap.setMyLocationEnabled(true);
-                //ActivityCompat.requestPermissions(ShowLocation.this
-                //,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
-                  //              ,Manifest.permission.ACCESS_FINE_LOCATION},1);
-            } // disini isi kan modal untuk grant permission, callback nya ke onPermission
-        } else {
-            buildGoogleApiClient();
-            mMap.setMyLocationEnabled(true);
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(ShowLocation.this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+
+                if (ValueButton == 1) {
+                    mMap.setMyLocationEnabled(false);
+                } else {
+                    mMap.setMyLocationEnabled(true);
+                    buildGoogleApiClient();
+                    //ActivityCompat.requestPermissions(ShowLocation.this
+                    //,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                    //              ,Manifest.permission.ACCESS_FINE_LOCATION},1);
+                } // disini isi kan modal untuk grant permission, callback nya ke onPermission
+            } else {
+                if (ValueButton == 1) {
+                    mMap.setMyLocationEnabled(false);
+                } else {
+                    buildGoogleApiClient();
+                    mMap.setMyLocationEnabled(true);
+                }
+            }
         }
     }
 
@@ -283,7 +306,6 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                         }
                         mMap.setMyLocationEnabled(true);
                     }
-
                 } else {
 
                     // Permission denied, Disable the functionality that depends on this permission.
@@ -471,25 +493,27 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
-        double temp = computeDistanceBetween(position, dest);
-        Log.i("temp", "Value " + temp);
+        currentlocation = computeDistanceBetween(position, dest);
+        Log.i("temp", "Value " + currentlocation);
         double temp1 = (position.latitude + lat) / 2;
         double temp2 = (position.longitude + lng) / 2;
         LatLng move = new LatLng(temp1, temp2);
-        double b = mMap.addCircle(new CircleOptions().
+        destination = mMap.addCircle(new CircleOptions().
                 center(dest).
-                radius(90).
+                radius(1000).
                 strokeWidth(0f).
                 fillColor(0x550000FF)).getRadius();
 
-        if (temp < b) {
+        if (currentlocation < destination) {
             Log.i("Radius", "Masuk Radius");
             Toast.makeText(ShowLocation.this, "Anda memasuki Radius", Toast.LENGTH_LONG).show();
+            refresh.setText("Add");
+            ValueButton = 1;
         } else {
             Log.i("Radius", "Tidak Masuk dalam Radius");
         }
 
-        Log.i("BBB", "Jarak " + b);
+        Log.i("BBB", "Jarak " + destination);
 
         String url = getDirectionsUrl(position, dest);
         DownloadTask downloadTask = new DownloadTask();
@@ -499,37 +523,37 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
         //move map camera
         float zoom = 15;
-        if (temp <= 35000 && temp > 25000) {
+        if (currentlocation <= 35000 && currentlocation > 25000) {
 
             zoom = 11;
             mMap.moveCamera(CameraUpdateFactory.newLatLng(move));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
 
-        } else if (temp > 35001 && temp <= 70000) {
+        } else if (currentlocation > 35001 && currentlocation <= 70000) {
 
             zoom = 10;
             mMap.moveCamera(CameraUpdateFactory.newLatLng(move));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
 
-        } else if (temp <= 120000 && temp > 70001) {
+        } else if (currentlocation <= 120000 && currentlocation > 70001) {
 
             zoom = 9;
             mMap.moveCamera(CameraUpdateFactory.newLatLng(move));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
 
-        } else if (temp <= 25000 && temp > 15000) {
+        } else if (currentlocation <= 25000 && currentlocation > 15000) {
 
             zoom = 12;
             mMap.moveCamera(CameraUpdateFactory.newLatLng(move));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
 
-        } else if (temp <= 10000 && temp > 5000) {
+        } else if (currentlocation <= 10000 && currentlocation > 5000) {
 
             zoom = 13;
             mMap.moveCamera(CameraUpdateFactory.newLatLng(move));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
 
-        } else if (temp <= 5000 && temp > 2500) {
+        } else if (currentlocation <= 5000 && currentlocation > 2500) {
 
             zoom = 14;
             mMap.moveCamera(CameraUpdateFactory.newLatLng(move));
@@ -606,26 +630,47 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public Bitmap getBitmapOFRootView(View v) {
-        View rootview = v.getRootView();
-        rootview.setDrawingCacheEnabled(true);
-        Bitmap bitmap1 = rootview.getDrawingCache();
-        return bitmap1;
+    private void GetImage(){
+
+        Date date = new Date();
+
+        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
+        File newdir = new File(dir);
+        newdir.mkdirs();
+
+                // Here, the counter will be incremented each time, and the
+                // picture taken by camera will be stored as 1.jpg,2.jpg
+                // and likewise.
+                String file = dir+ date +".jpg";
+                File newfile = new File(file);
+                try {
+                    newfile.createNewFile();
+                }
+                catch (IOException e)
+                {
+                }
+
+                Uri outputFileUri = Uri.fromFile(newfile);
+
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+                startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
     }
 
-    public void createImage(Bitmap bmp) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-        File file = new File(Environment.getExternalStorageDirectory() +
-                "/capturedscreenandroid.jpg");
-        try {
-            file.createNewFile();
-            FileOutputStream outputStream = new FileOutputStream(file);
-            outputStream.write(bytes.toByteArray());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK) {
+            Log.d("CameraDemo", "Pic saved");
         }
+    }
+
+    public boolean area(LatLng first, LatLng second){
+
+
+        return true;
     }
 }
 
