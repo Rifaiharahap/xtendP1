@@ -6,12 +6,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -67,11 +64,9 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    TextView TVduration,TVdistance;
+    TextView TVduration, TVdistance;
     Button refresh;
     int ValueButton;
-    int TAKE_PHOTO_CODE = 0;
-    public static int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,41 +104,56 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         */
 
-        refresh = (Button)findViewById(R.id.RefreshLocation);
-        TVduration = (TextView)findViewById(R.id.Duration);
-        TVdistance = (TextView)findViewById(R.id.Distance);
+        refresh = (Button) findViewById(R.id.RefreshLocation);
+        TVduration = (TextView) findViewById(R.id.Duration);
+        TVdistance = (TextView) findViewById(R.id.Distance);
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ValueButton == 0){
-                Intent intent = getIntent();
-                overridePendingTransition(0, 0);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(intent);
+                if (ValueButton == 0) {
+                    Intent intent = getIntent();
+                    overridePendingTransition(0, 0);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(intent);
                 } else {
 
                     //mMap.setMyLocationEnabled(false);
-                    startActivity(new Intent(ShowLocation.this,InputData.class));
+                    startActivity(new Intent(ShowLocation.this, InputData.class));
 
                 }
             }
         });
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+
+                mMap.setMyLocationEnabled(true);
+                buildGoogleApiClient();
+
+        } else {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+                    //mMap.setMyLocationEnabled(true);
+                    //buildGoogleApiClient();
+
+        }
+
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-                mMap.snapshot(new GoogleMap.SnapshotReadyCallback(){
+                mMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
 
                     @Override
                     public void onSnapshotReady(Bitmap bitmap) {
 
-                        /*View v1 = getWindow().getDecorView().getRootView();
-                        v1.setDrawingCacheEnabled(true);
-                        bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-                        v1.setDrawingCacheEnabled(true);*/
                         String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
                         File imageFile = new File(mPath);
 
@@ -154,16 +164,12 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                             outputStream.close();
 
                             // Write the string to the file
-                        }
-                        catch (FileNotFoundException e)
-                        {
+                        } catch (FileNotFoundException e) {
                             // TODO Auto-generated catch block
                             Log.d("ImageCapture", "FileNotFoundException");
                             Log.d("ImageCapture", e.getMessage());
                             mPath = "";
-                        }
-                        catch (IOException e)
-                        {
+                        } catch (IOException e) {
                             // TODO Auto-generated catch block
                             Log.d("ImageCapture", "IOException");
                             Log.d("ImageCapture", e.getMessage());
@@ -175,33 +181,9 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(ShowLocation.this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-
-                if (ValueButton == 1) {
-                    mMap.setMyLocationEnabled(false);
-                } else {
-                    mMap.setMyLocationEnabled(true);
-                    buildGoogleApiClient();
-                    //ActivityCompat.requestPermissions(ShowLocation.this
-                    //,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
-                    //              ,Manifest.permission.ACCESS_FINE_LOCATION},1);
-                } // disini isi kan modal untuk grant permission, callback nya ke onPermission
-            } else {
-                if (ValueButton == 1) {
-                    mMap.setMyLocationEnabled(false);
-                } else {
-                    buildGoogleApiClient();
-                    mMap.setMyLocationEnabled(true);
-                }
-            }
-        }
     }
+
+
 
 
     protected synchronized void buildGoogleApiClient() {
@@ -224,6 +206,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            Log.e("Client","Error " + mGoogleApiClient + " " + mLocationRequest);
         }
     }
 
@@ -297,14 +280,13 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
                     // permission was granted. Do the
                     // contacts-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
+                        if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
+                                == PackageManager.PERMISSION_GRANTED) {
 
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        mMap.setMyLocationEnabled(true);
+                            if (mGoogleApiClient == null) {
+                                buildGoogleApiClient();
+                            }
+                            mMap.setMyLocationEnabled(true);
                     }
                 } else {
 
@@ -628,49 +610,6 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
             // Several error may come out with file handling or DOM
             e.printStackTrace();
         }
-    }
-
-    private void GetImage(){
-
-        Date date = new Date();
-
-        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
-        File newdir = new File(dir);
-        newdir.mkdirs();
-
-                // Here, the counter will be incremented each time, and the
-                // picture taken by camera will be stored as 1.jpg,2.jpg
-                // and likewise.
-                String file = dir+ date +".jpg";
-                File newfile = new File(file);
-                try {
-                    newfile.createNewFile();
-                }
-                catch (IOException e)
-                {
-                }
-
-                Uri outputFileUri = Uri.fromFile(newfile);
-
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-
-                startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK) {
-            Log.d("CameraDemo", "Pic saved");
-        }
-    }
-
-    public boolean area(LatLng first, LatLng second){
-
-
-        return true;
     }
 }
 
