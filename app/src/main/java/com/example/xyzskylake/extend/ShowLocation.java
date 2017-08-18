@@ -61,12 +61,13 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     double lat, lng, currentlocation, destination;
     GoogleApiClient mGoogleApiClient;
+    LatLng latLng;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     TextView TVduration, TVdistance;
     Button refresh;
-    int ValueButton;
+    int ValueButton, ValueImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,8 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         ValueButton = 0;
+        ValueImage = 0;
+
         lat = 3.567365;
         lng = 98.657040;
         final Date now = new Date();
@@ -118,10 +121,16 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                     finish();
                     overridePendingTransition(0, 0);
                     startActivity(intent);
-                } else {
 
-                    //mMap.setMyLocationEnabled(false);
-                    startActivity(new Intent(ShowLocation.this, InputData.class));
+                } else if (ValueButton == 1){
+
+                    Intent intent = new Intent(ShowLocation.this,InputData.class);
+                    double latitude = latLng.latitude;
+                    double longitude = latLng.longitude;
+                    intent.putExtra("Latitude",latitude);
+                    intent.putExtra("Longitude",longitude);
+                    Log.i("Lat & Long ", "Value " + latitude + " " + longitude);
+                    startActivity(intent);
 
                 }
             }
@@ -141,8 +150,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST_LOCATION);
-                    //mMap.setMyLocationEnabled(true);
-                    //buildGoogleApiClient();
+
 
         }
 
@@ -150,41 +158,41 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMapLoaded() {
                 mMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
-
                     @Override
                     public void onSnapshotReady(Bitmap bitmap) {
 
-                        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
-                        File imageFile = new File(mPath);
+                        if(ValueImage == 0) {
 
-                        try {
-                            FileOutputStream outputStream = new FileOutputStream(imageFile);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
-                            outputStream.flush();
-                            outputStream.close();
+                            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+                            File imageFile = new File(mPath);
 
-                            // Write the string to the file
-                        } catch (FileNotFoundException e) {
-                            // TODO Auto-generated catch block
-                            Log.d("ImageCapture", "FileNotFoundException");
-                            Log.d("ImageCapture", e.getMessage());
-                            mPath = "";
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            Log.d("ImageCapture", "IOException");
-                            Log.d("ImageCapture", e.getMessage());
-                            mPath = "";
+                            try {
+                                FileOutputStream outputStream = new FileOutputStream(imageFile);
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+                                outputStream.flush();
+                                outputStream.close();
+
+                                // Write the string to the file
+                            } catch (FileNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                Log.d("ImageCapture", "FileNotFoundException");
+                                Log.d("ImageCapture", e.getMessage());
+                                mPath = "";
+                            } catch (IOException e) {
+                                // TODO Auto-generated catch block
+                                Log.d("ImageCapture", "IOException");
+                                Log.d("ImageCapture", e.getMessage());
+                                mPath = "";
+                            }
+
+                            ValueImage = 1;
                         }
-
                     }
                 });
 
             }
         });
     }
-
-
-
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -222,9 +230,9 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
         Postion(latLng);
-        GetSnapShot();
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -256,13 +264,12 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
 
-
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
-            }
+                }
             return false;
         } else {
             return true;
@@ -291,7 +298,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                 } else {
 
                     // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
@@ -327,7 +334,6 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
-
 
     /**
      * A class to parse the Google Places in JSON format
@@ -391,7 +397,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
             }
 
-// Drawing polyline in the Google Map for the i-th route
+            // Drawing polyline in the Google Map for the i-th route
             Log.i("Distance & Duration", distance + " " + duration);
             TVdistance.setText("Distance :" + distance );
             TVduration.setText("Duration : " + duration);
@@ -482,7 +488,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         LatLng move = new LatLng(temp1, temp2);
         destination = mMap.addCircle(new CircleOptions().
                 center(dest).
-                radius(1000).
+                radius(100).
                 strokeWidth(0f).
                 fillColor(0x550000FF)).getRadius();
 
@@ -545,70 +551,6 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
             mMap.moveCamera(CameraUpdateFactory.newLatLng(move));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
-        }
-
-        //stop location updates
-        //if (mGoogleApiClient != null) {
-        //}
-
-    }
-
-    public void GetSnapShot() {
-        final Date now = new Date();
-        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
-        //MapView mapView = (MapView)findViewById(R.id.map);
-        // mapView.buildDrawingCache();
-
-        try {
-                GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback()
-                {
-                    @Override
-                    public void onSnapshotReady(Bitmap snapshot)
-                    {
-                        // TODO Auto-generated method stub
-                        Bitmap bitmap = snapshot;
-
-                        //String filePath = System.currentTimeMillis() + ".jpeg";
-                        View v1 = getWindow().getDecorView().getRootView();
-                        v1.setDrawingCacheEnabled(true);
-                        bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-                        v1.setDrawingCacheEnabled(true);
-                        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
-                        File imageFile = new File(mPath);
-
-                        try {
-                            FileOutputStream outputStream = new FileOutputStream(imageFile);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
-                            outputStream.flush();
-                            outputStream.close();
-
-                            // Write the string to the file
-                        }
-                        catch (FileNotFoundException e)
-                        {
-                            // TODO Auto-generated catch block
-                            Log.d("ImageCapture", "FileNotFoundException");
-                            Log.d("ImageCapture", e.getMessage());
-                            mPath = "";
-                        }
-                        catch (IOException e)
-                        {
-                            // TODO Auto-generated catch block
-                            Log.d("ImageCapture", "IOException");
-                            Log.d("ImageCapture", e.getMessage());
-                            mPath = "";
-                        }
-
-                        //openShareImageDialog(filePath);
-                    }
-                };
-
-                mMap.snapshot(callback);
-
-            //createImage(imageFile);
-        } catch (Throwable e) {
-            // Several error may come out with file handling or DOM
-            e.printStackTrace();
         }
     }
 }

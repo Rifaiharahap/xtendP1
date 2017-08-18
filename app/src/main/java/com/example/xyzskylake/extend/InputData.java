@@ -32,12 +32,18 @@ public class InputData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_data);
 
+        now = new Date();
+
         Btakeimge = (Button)findViewById(R.id.TakeImage);
         BSend = (Button)findViewById(R.id.BSend);
         ETcomment = (EditText) findViewById(R.id.EDcommet);
         IVshowimage = (ImageView) findViewById(R.id.ShowImage);
         LLComment = (LinearLayout)findViewById(R.id.LLComment);
-        now = new Date();
+
+        double latitude = getIntent().getDoubleExtra("Latitude",0);
+        double longitude = getIntent().getDoubleExtra("Longitude",0);
+
+        Log.i("Lat & Long ", "Value " + latitude + " " + longitude);
 
         Btakeimge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,31 +57,9 @@ public class InputData extends AppCompatActivity {
 
     private void GetImage(){
 
-
-
-        /*final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
-        File newdir = new File(dir);
-        newdir.mkdirs();
-
-        // Here, the counter will be incremented each time, and the
-        // picture taken by camera will be stored as 1.jpg,2.jpg
-        // and likewise.
-        String file =  dir + date +".jpg";
-        File newfile = new File(file);
-        try {
-
-            newfile.createNewFile();
-
-        }
-        catch (IOException e)
-        { }
-
-        Uri outputFileUri = Uri.fromFile(newfile);*/
-
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-
         startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
+
     }
 
     @Override
@@ -106,10 +90,6 @@ public class InputData extends AppCompatActivity {
                 outputStream.close();
 
             } catch (IOException e){}
-
-            //Uri outputFileUri = Uri.fromFile(newfile);
-            //data.putExtra(MediaStore.EXTRA_OUTPUT,outputFileUri);
         }
     }
-
 }
