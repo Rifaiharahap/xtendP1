@@ -4,34 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.xyzskylake.extend.InputData">
-
-    <Button
-        android:id="@+id/TakeImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Photo" />
 
     <ImageView
         android:id="@+id/ShowImage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="invisible"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/TakeImage"
+        android:textAlignment="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TakeImage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="148dp"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+        android:layout_gravity="center_horizontal"
+        android:text="Photo"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#BDBDBD"
+        android:id="@+id/LLComment"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"
+        android:layout_marginBottom="40dp">
 
     <EditText
         android:id="@+id/EDcommet"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Comment..."
         android:ems="10"
+        android:hint="Comment..."
+        android:textColor="#FFFFFF"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="66dp" />
+        android:layout_marginBottom="5dp" />
+
+        <Button
+            android:id="@+id/BSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:layout_alignTop="@+id/EDcommet"
+            android:layout_toEndOf="@+id/EDcommet" />
+    </LinearLayout>
 </RelativeLayout>
