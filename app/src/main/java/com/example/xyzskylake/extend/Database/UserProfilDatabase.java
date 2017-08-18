@@ -11,6 +11,6 @@ public class UserProfilDatabase extends DatabaseHelper {
     public UserProfilDatabase(Context context){
 
         super(context);
-        
+
     }
 }
