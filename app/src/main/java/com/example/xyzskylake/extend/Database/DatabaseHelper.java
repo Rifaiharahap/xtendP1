@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String USER_PASSWORD = "password";
         public static final String USER_ADDRESS = "address";
         public static final String USER_PHONE_NUMBER = "phone_number";
-        public static final String USER_VERIFICATION = "VERIFICATION";
+        public static final String USER_VERIFICATION = "verification";
         public static final String USER_PHOTO = "photo";
         public static final String USER_COMPANY_NAME = "company_name";
         public static final String USER_COMPANY_ADDRESS = "company_address";
