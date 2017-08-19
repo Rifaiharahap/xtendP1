@@ -12,32 +12,58 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/profile"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
         <ListView
-            android:layout_marginTop="68dp"
             android:layout_width="match_parent"
             android:layout_height="469dp"
-           android:id="@+id/listview"/>
-<LinearLayout
+           android:id="@+id/listview"
+            android:layout_below="@+id/relativeLayout2"
+            android:layout_alignParentStart="true" />
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="#66757575">
+    android:layout_height="85dp"
+    android:background="#2196F3"
+    android:id="@+id/relativeLayout2">
 
-<TextView
+<Button
+    android:textColor="#FFFFFF"
+    android:layout_width="180dp"
+    android:layout_height="40dp"
+    android:background="#2196F3"
+    android:text="List"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true"
+    android:id="@+id/button5" />
+
+    <Button
+        android:textColor="#FFFFFF"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:background="#2196F3"
+        android:text="Urgent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/button6"/>
+
+    <TextView
     android:layout_marginLeft="120dp"
     android:fontFamily="sans-serif"
     android:textStyle="bold"
     android:textSize="20sp"
-    android:textColor="#000000"
+    android:textColor="#FFFFFF"
     android:layout_gravity="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Assignment"
-    android:textAlignment="center" />
-</LinearLayout>
+    android:textAlignment="center"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp" />
+
+</RelativeLayout>
 
 
     </RelativeLayout>
@@ -47,18 +73,20 @@
 
     <RelativeLayout
 
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/home"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/profile">
+        android:layout_alignParentStart="true"
+        android:background="#ffffff">
         <ImageView
+            android:layout_marginTop="30dp"
             android:id="@+id/imageView3"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginLeft="70dp"
-            design:srcCompat="@drawable/xtend"
+            design:srcCompat="@mipmap/ic_launcher"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
@@ -71,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XTEND"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:layout_below="@+id/imageView3"
             android:layout_centerHorizontal="true" />
         <TextView
@@ -84,30 +112,30 @@
             android:textSize="30sp"
             android:text="Welcome"
             android:id="@+id/textView2"
-            android:layout_marginTop="54dp"
+            android:layout_marginTop="22dp"
             android:layout_below="@+id/textView5"
             android:layout_alignParentStart="true" />
 
 
         <TextView
             android:fontFamily="sans-serif"
-            android:textSize="27sp"
+            android:textSize="30sp"
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Francis Y Seaw"
-            android:layout_marginTop="49dp"
             android:layout_below="@+id/textView2"
-            android:layout_alignStart="@+id/textView4" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="22dp" />
 
         <TextView
             android:textAlignment="center"
-            android:textSize="27sp"
+            android:textSize="25sp"
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Xtend President"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="17dp"
             android:layout_below="@+id/textView3"
             android:layout_centerHorizontal="true" />
 
@@ -117,14 +145,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="40dp"
         android:id="@+id/menubawah"
         android:visibility="visible"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#66ffffff">
+        android:background="#000000">
 
         <ImageView
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="219dp"
             android:id="@+id/imgurgent"
             android:layout_width="wrap_content"
@@ -132,6 +161,7 @@
             design:srcCompat="@drawable/ic_action_urgent" />
 
         <ImageView
+            android:layout_marginTop="5dp"
             android:visibility="visible"
             android:id="@+id/imgtugas"
             android:layout_width="wrap_content"
@@ -140,6 +170,7 @@
             android:layout_marginLeft="119dp"/>
 
         <ImageView
+            android:layout_marginTop="5dp"
             android:visibility="gone"
             android:id="@+id/imgtugas2"
             android:layout_width="wrap_content"
@@ -148,6 +179,7 @@
             android:layout_marginLeft="119dp"/>
 
         <ImageView
+            android:layout_marginTop="5dp"
             android:visibility="gone"
             android:layout_marginLeft="22dp"
         android:id="@+id/imghome"
@@ -156,6 +188,7 @@
         design:srcCompat="@drawable/ic_home" />
 
         <ImageView
+            android:layout_marginTop="5dp"
             android:visibility="visible"
             android:layout_marginLeft="22dp"
             android:id="@+id/imghome2"
@@ -163,31 +196,10 @@
             android:layout_height="wrap_content"
             design:srcCompat="@drawable/ic_home2" />
 
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:id="@+id/txthome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home" />
 
-        <TextView
-            android:id="@+id/txttugas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Assignment"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="100dp"/>
-
-        <TextView
-            android:layout_marginTop="30dp"
-            android:id="@+id/txturgent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Urgent"
-            android:layout_marginLeft="215dp"/>
 
         <ImageView
+            android:layout_marginTop="5dp"
             android:layout_marginRight="9dp"
             android:id="@+id/imgset"
             android:layout_width="wrap_content"
@@ -195,13 +207,7 @@
             design:srcCompat="@drawable/ic_setting"
             android:layout_marginLeft="308dp"/>
 
-        <TextView
-            android:id="@+id/txtset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Settings"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="300dp"/>
+
     </RelativeLayout>
 
 

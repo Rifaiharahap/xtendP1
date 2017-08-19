@@ -34,12 +34,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" /><![CDATA[
         />
-        <activity
-            android:name=".Pegawai"
-            android:screenOrientation="portrait" />
-        <!--
+        ]]><!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.

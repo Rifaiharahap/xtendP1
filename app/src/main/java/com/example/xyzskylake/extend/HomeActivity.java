@@ -36,44 +36,12 @@ public class HomeActivity extends AppCompatActivity {
         imgtugas2 = (ImageView)findViewById(R.id.imgtugas2);
         imghome = (ImageView)findViewById(R.id.imghome);
         imghome2 = (ImageView)findViewById(R.id.imghome2);
-        txthome=(TextView)findViewById(R.id.txthome) ;
-        txttugas=(TextView)findViewById(R.id.txttugas) ;
         home = (RelativeLayout) findViewById(R.id.home);
         profile = (RelativeLayout) findViewById(R.id.profile);
         lst = (ListView) findViewById(R.id.listview);
         CustomListview customListview = new CustomListview(this, judul, keterangan,time);
         lst.setAdapter(customListview);
 
-        txthome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                home.setVisibility(View.VISIBLE);
-                if (home.getVisibility() == View.VISIBLE) {
-                    profile.setVisibility(View.GONE);
-                    imghome2.setVisibility(View.VISIBLE);
-                    imghome.setVisibility(View.GONE);
-                    imgtugas.setVisibility(View.VISIBLE);
-                    imgtugas2.setVisibility(View.GONE);
-
-
-                }
-            }
-        });
-        txttugas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                home.setVisibility(View.GONE);
-                if (home.getVisibility() == View.GONE) {
-                    profile.setVisibility(View.VISIBLE);
-                    profile.setVisibility(View.VISIBLE);
-                    imghome2.setVisibility(View.GONE);
-                    imghome.setVisibility(View.VISIBLE);
-                    imgtugas.setVisibility(View.GONE);
-                    imgtugas2.setVisibility(View.VISIBLE);
-
-                }
-            }
-        });
 
         imghome.setOnClickListener(new View.OnClickListener() {
             @Override
