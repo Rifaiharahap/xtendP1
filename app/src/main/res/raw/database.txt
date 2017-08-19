@@ -1,0 +1,34 @@
+
+
+    @TABLE USERPROFIL
+    #Field USER_ID                      VARCHAR NOT NULL PRIMARY KEY
+    #Field USER_NAME                    VARCHAR
+    #Field USER_EMAIL                   VARCHAR
+    #Field USER_DATE_BIRTH              LONG
+    #Field USER_PASSWORD                VARCHAR
+    #Field USER_ADDRESS                 VARCHAR
+    #Field USER_PHONE_NUMBER            VARCHAR
+    #Field USER_VERIFICATION            VARCHAR
+    #Field USER_PHOTO                   VARCHAR
+    #Field USER_COMPANY_NAME            VARCHAR
+    #Field USER_USER_COMPANY_ADDRESS    VARCHAR
+
+
+    @TABLE TICKET
+    #Field TICKET_ID                     VARCHAR NOT NULL PRIMARY KEY
+    #Field TICKET_SUBJECT                VARCHAR
+    #Field TICKET_DESCRIPTION            VARCHAR
+    #Field TICKET_LATITUDE               DOUBLE
+    #Field TICKET_LONGITUDE              DOUBLE
+    #Field TICKET_RADIUS                 DOUBLE
+    #Field TICKET_CREATE_DATE            LONG
+    #Field TICKET_CREATE_BY              VARCHAR
+
+
+    @TABLE ACTION
+    #Field ACTION_ID                    VARCHAR NOT NULL PRIMARY KEY
+    #Field ACTION_TICKET_ID             VARCHAR FOREIGN KEY
+    #Field ACTION_NAME                  VARCHAR
+    #Field ACTION_COMMENT               VARCHAR
+    #Field ACTION_PHOTO                 VARCHAR
+    #Field ACTION_DATE                  LONG

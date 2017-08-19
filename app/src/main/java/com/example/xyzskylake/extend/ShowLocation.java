@@ -124,6 +124,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
                 } else if (ValueButton == 1){
 
+                    ValueButton = 0;
                     Intent intent = new Intent(ShowLocation.this,InputData.class);
                     double latitude = latLng.latitude;
                     double longitude = latLng.longitude;
@@ -488,7 +489,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         LatLng move = new LatLng(temp1, temp2);
         destination = mMap.addCircle(new CircleOptions().
                 center(dest).
-                radius(100).
+                radius(1000).
                 strokeWidth(0f).
                 fillColor(0x550000FF)).getRadius();
 

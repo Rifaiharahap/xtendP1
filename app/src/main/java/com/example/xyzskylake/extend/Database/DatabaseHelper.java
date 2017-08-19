@@ -22,6 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("DROP TABLE IF EXISTS" + UserProfil.CREATE_QUERY);
+        db.execSQL("DROP TABLE IF EXISTS" + Ticket.CREATE_QUERY);
+        db.execSQL("DROP TABLE IF EXISTS" + Action.CREATE_QUERY);
         onCreate(db);
 
     }
@@ -36,23 +38,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String USER_ID = "uuid";
         public static final String USER_NAME = "name";
         public static final String USER_EMAIL = "email";
+        public static final String USER_DATE_BIRTH = "date_birth";
         public static final String USER_PASSWORD = "password";
         public static final String USER_ADDRESS = "address";
         public static final String USER_PHONE_NUMBER = "phone_number";
+        public static final String USER_VERIFICATION = "VERIFICATION";
         public static final String USER_PHOTO = "photo";
         public static final String USER_COMPANY_NAME = "company_name";
         public static final String USER_COMPANY_ADDRESS = "company_address";
-        public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXIST" + TABEL_NAME + "(" +
-                USER_ID + "VARCHAR NOT NULL PRIMARY KET," +
+        public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXIST " + TABEL_NAME + "(" +
+                USER_ID + "VARCHAR NOT NULL PRIMARY KEY," +
                 USER_NAME + "VARCHAR," +
                 USER_EMAIL + "VARCHAR," +
+                USER_DATE_BIRTH + "LONG," +
                 USER_PASSWORD + "VARCHAR," +
                 USER_ADDRESS + "VARCHAR," +
                 USER_PHONE_NUMBER  + "VARCHAR," +
                 USER_PHOTO + "VARCHAR," +
+                USER_VERIFICATION + "VARCHAR," +
                 USER_COMPANY_NAME + "VARCHAR," +
                 USER_COMPANY_ADDRESS + "VARCHAR)";
+    }
 
+    public static final class Ticket implements BaseColumns{
+        public static final String TABLE_NAME = "ticket";
+        public static final String TABLE_ID = "id";
+        public static final String TABLE_SUBJECT = "subject";
+        public static final String TABLE_DESCRIPTION = "description";
+        public static final String TABLE_LAT = "lat";
+        public static final String TABLE_LNG = "lng";
+        public static final String TABLE_RADIUS = "radius";
+        public static final String TABLE_CREATE_DATE = "create_date";
+        public static final String TABLE_CREATE_BY = "create_by";
+        public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXIST " + TABLE_NAME + "( " +
+                TABLE_ID + "VARCHAR NOT NULL PRIMARY KEY," +
+                TABLE_SUBJECT + "VARCHAR," +
+                TABLE_DESCRIPTION + "VARCHAR," +
+                TABLE_LAT + "DOUBLE," +
+                TABLE_LNG + "DOUBLE," +
+                TABLE_RADIUS + "DOUBLE," +
+                TABLE_CREATE_DATE + "LONG," +
+                TABLE_CREATE_BY  + "VARCHAR)";
+    }
+
+    public static final class Action implements BaseColumns{
+        public static final String TABEL_ACTION = "action";
+        public static final String ACTION_ID = "id";
+        public static final String ACTION_TICKET_ID = "ticket_id";
+        public static final String ACTION_NAME = "name";
+        public static final String ACTION_COMMENT = "comment";
+        public static final String ACTION_PHOTO = "photo";
+        public static final String ACTION_DATE = "date";
+        public static final String CREATE_QUERY = "CREATE TABLE IF NOT EXIST " + TABEL_ACTION + "(" +
+                ACTION_ID + "VARCHAR NOT NULL PRIMARY KEY," +
+                ACTION_TICKET_ID + "VARCHAR FOREIGN KEY," +
+                ACTION_NAME + "VARCHAR," +
+                ACTION_COMMENT + "VARCHAR," +
+                ACTION_PHOTO + "VARCHAR," +
+                ACTION_DATE + "LONG)";
 
     }
 }
