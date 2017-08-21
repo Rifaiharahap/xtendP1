@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("DROP TABLE IF EXISTS" + UserProfil.CREATE_QUERY);
+        db.execSQL("DROP TABLE IF EXISTS" + UserProfile.CREATE_QUERY);
         db.execSQL("DROP TABLE IF EXISTS" + Ticket.CREATE_QUERY);
         db.execSQL("DROP TABLE IF EXISTS" + Action.CREATE_QUERY);
         onCreate(db);
@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public static final class UserProfil implements BaseColumns{
+    public static final class UserProfile implements BaseColumns{
         public static final String TABEL_NAME = "user_profil";
         public static final String USER_ID = "uuid";
         public static final String USER_NAME = "name";

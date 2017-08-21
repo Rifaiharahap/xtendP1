@@ -4,7 +4,7 @@ package com.example.xyzskylake.extend.Model;
  * Created by harzen on 19/08/17.
  */
 
-public class UserProfilModel {
+public class UserProfileModel {
 
     protected String uuid;
     protected String name;
@@ -18,11 +18,11 @@ public class UserProfilModel {
     protected String company_name;
     protected String company_address;
 
-    public UserProfilModel(){
+    public UserProfileModel(){
 
     }
 
-    public UserProfilModel (String uuid, String name, String email, long date_birth,
+    public UserProfileModel(String uuid, String name, String email, long date_birth,
                             String password, String address, String phone_number,
                             String verification, String photo, String company_name, String company_address){
         setUuid(uuid);
