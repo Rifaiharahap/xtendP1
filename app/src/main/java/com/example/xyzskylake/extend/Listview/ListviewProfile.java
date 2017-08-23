@@ -12,20 +12,23 @@ import android.widget.TextView;
 
 import com.example.xyzskylake.extend.R;
 
+import static com.example.xyzskylake.extend.R.id.imagelogo;
+import static com.example.xyzskylake.extend.R.id.tanda;
+
 
 public class ListviewProfile extends ArrayAdapter<String> {
 
-    private String[] keterangan;
-    private Integer[] imgid;
+    private String[] tanda;
+    private Integer[] imagelogo;
     private Activity context;
 
 
-    public ListviewProfile(Activity context, String[] keterangan, Integer[] imgid)
+    public ListviewProfile(Activity context, String[] tanda, Integer[] imagelogo)
     {
-        super(context, R.layout.listviewlayout,keterangan);
+        super(context, R.layout.listviewlayout,tanda);
         this.context=context;
-        this.keterangan=keterangan;
-        this.imgid=imgid;
+        this.tanda=tanda;
+        this.imagelogo=imagelogo;
 
     }
 
@@ -46,8 +49,8 @@ public class ListviewProfile extends ArrayAdapter<String> {
 viewHolder = (ViewHolder) r.getTag();
 
         }
-        viewHolder.ivw.setImageResource(imgid[position]);
-        viewHolder.tvw1.setText(keterangan[position]);
+        viewHolder.ivw2.setImageResource(imagelogo[position]);
+        viewHolder.tvw2.setText(tanda[position]);
 
 
         return r;
@@ -56,11 +59,11 @@ viewHolder = (ViewHolder) r.getTag();
     }
 
     class ViewHolder{
-        TextView tvw1;
-        ImageView ivw;
+        TextView tvw2;
+        ImageView ivw2;
         ViewHolder(View v){
-            tvw1= (TextView) v.findViewById(R.id.keterangan);
-            ivw = (ImageView) v.findViewById(R.id.imageView);
+            tvw2= (TextView) v.findViewById(R.id.tanda);
+            ivw2 = (ImageView) v.findViewById(R.id.imagelogo);
 
         }
 

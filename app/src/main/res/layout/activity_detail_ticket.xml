@@ -8,18 +8,6 @@
     tools:context="com.example.xyzskylake.extend.DetailTicketActivity"
     android:background="#ffffff">
 
-    <TextView
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Perbaikan Kabel Jaringan Komputer"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="17dp" />
-
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,15 +17,34 @@
     android:layout_height="200dp"
     tools:context="com.example.xyzskylake.extend.Maps.DetailTicket"/>
 
-<TextView
-android:id="@+id/textView7"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Jalan Pulau Pinang No.1"
-android:layout_marginTop="54dp"
-android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="17dp"
+        android:text="Perbaikan Kabel Jaringan Komputer"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-<TextView
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView8"
+        android:layout_marginTop="19dp"
+        android:text="20 Agustus 2017, 02.00 WIB" />
+
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
 android:id="@+id/textView8"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
@@ -48,6 +55,8 @@ android:layout_marginTop="24dp" />
 
 
 <TextView
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
 android:id="@+id/textView12"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
@@ -56,23 +65,25 @@ android:layout_marginTop="24dp"
 android:layout_below="@+id/textView7"
 android:layout_alignParentEnd="true" />
 
-<TextView
-android:id="@+id/textView14"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_alignParentStart="true"
-android:layout_below="@+id/textView8"
-android:layout_marginTop="19dp"
-android:text="20 Agustus 2017, 02.00 WIB" />
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jalan Pulau Pinang No.1"
+        android:layout_marginTop="5dp"/>
 
     <Button
-    android:textSize="16sp"
-    android:background="@drawable/buttonshape"
-    android:id="@+id/AcceptTicket"
-    android:layout_width="100dp"
-    android:layout_height="50dp"
-    android:text="Accept"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginBottom="107dp" />
+
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/AcceptTicket"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/mapbutton"
+        android:text="Accept"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 
 </LinearLayout>

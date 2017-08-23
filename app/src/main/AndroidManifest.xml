@@ -50,11 +50,14 @@
 
         <activity
             android:name=".ShowLocation"
-            android:label="@string/title_activity_show_location" />
+            android:label="@string/title_activity_show_location"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Maps.DetailTicket"
-            android:label="@string/title_activity_detail_ticket" />
-        <activity android:name=".InputData"></activity>
+            android:label="@string/title_activity_detail_ticket"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".InputData"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

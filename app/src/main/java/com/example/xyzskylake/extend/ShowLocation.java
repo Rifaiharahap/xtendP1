@@ -96,8 +96,8 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         ValueButton = 0;
         ValueImage = 0;
 
-        lat = 3.567365;
-        lng = 98.657040;
+        lat = 3.575585;
+        lng = 98.682625;
         final Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
         // Add a marker in Sydney and move the camera

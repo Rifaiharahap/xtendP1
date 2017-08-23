@@ -8,10 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:padding="15dp">
+        android:padding="5dp">
 
 
         <TextView
+            android:fontFamily="monospace"
             android:textSize="16sp"
             android:id="@+id/judul"
             android:layout_width="wrap_content"
@@ -23,7 +24,7 @@
         <TextView
             android:textSize="16sp"
             android:id="@+id/keterangan"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Keterangan"
@@ -31,7 +32,7 @@
 
         <TextView
             android:textSize="16sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
