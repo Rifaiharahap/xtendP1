@@ -64,11 +64,12 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     GoogleApiClient mGoogleApiClient;
     LatLng latLng;
     Location mLastLocation;
-    Marker mCurrLocationMarker;
+    Marker mCurrLocationMarker,destinationmarker;
     LocationRequest mLocationRequest;
     TextView TVduration, TVdistance;
     Button refresh;
-    int ValueButton, ValueImage;
+    int MarkerValue, ValueImage;
+    String distance, duration;
     boolean value = false;
 
     @Override
@@ -95,14 +96,14 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        ValueButton = 0;
+        MarkerValue = 0;
         ValueImage = 0;
 
-        //lat = 3.575585;
-       // lng = 98.682625;
+        lat = 3.606497;
+        lng = 98.693252;
 
-        lat = 3.138580;
-        lng = 101.692916;
+        //lat = 3.569914;
+        //lng = 98.649731;
         final Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
         // Add a marker in Sydney and move the camera
@@ -119,7 +120,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ValueButton == 0) {
+                if (MarkerValue == 0) {
                     Intent intent = getIntent();
                     overridePendingTransition(0, 0);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -127,9 +128,9 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
                     overridePendingTransition(0, 0);
                     startActivity(intent);
 
-                } else if (ValueButton == 1){
+                } else if (MarkerValue == 1){
 
-                    ValueButton = 0;
+                    MarkerValue = 0;
                     Intent intent = new Intent(ShowLocation.this,InputData.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     double latitude = latLng.latitude;
@@ -234,16 +235,16 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     public void onLocationChanged(Location location) {
 
         mLastLocation = location;
-        if (mCurrLocationMarker != null) {
+        /*if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
-        }
+        }*/
         latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
         Postion(latLng);
+        String TempDistance = distance;
+        String TempDuration = duration;
 
         //stop location updates
         //mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(latLng.latitude,latLng.longitude)));
-
         onResume();
         if (value == true){
 
@@ -384,10 +385,10 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
             ArrayList points = null;
-            PolylineOptions lineOptions = null;
+            PolylineOptions lineOptions = new PolylineOptions();
             MarkerOptions markerOptions = new MarkerOptions();
-            String distance = "";
-            String duration = "";
+            distance = "";
+            duration = "";
 
             for (int i = 0; i < result.size(); i++) {
                 points = new ArrayList();
@@ -495,36 +496,34 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     private void Postion(LatLng position) {
 
         //Bitmap iconuser = BitmapFactory.decodeResource(getResources(),R.drawable.gojek);
+        LatLng dest;
+        dest = new LatLng(lat, lng);
+        if (MarkerValue == 0) {
+            MarkerOptions markerOptions = new MarkerOptions().position(position).
+                    title("User Id").
+                    icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            destinationmarker = mMap.addMarker(markerOptions);
 
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(position).
-                        title("Nama Orang");
-                        //.icon(BitmapDescriptorFactory.fromBitmap(iconuser));
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+            MarkerOptions markerOptions1 = new MarkerOptions().position(dest).
+                    title("Tujuan").
+                    icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            mCurrLocationMarker = mMap.addMarker(markerOptions1);
 
-        LatLng dest = new LatLng(lat, lng);
-        markerOptions.position(dest);
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        }
+            currentlocation = computeDistanceBetween(position, dest);
+            Log.i("temp", "Value " + currentlocation);
 
-        currentlocation = computeDistanceBetween(position, dest);
-        Log.i("temp", "Value " + currentlocation);
-        double temp1 = (position.latitude + lat) / 2;
-        double temp2 = (position.longitude + lng) / 2;
-        LatLng move = new LatLng(temp1, temp2);
-
-        destination = mMap.addCircle(new CircleOptions().
-                center(dest).
-                radius(100).
-                strokeWidth(0f).
-                fillColor(0x550000FF)).getRadius();
-
+        if (MarkerValue == 0) {
+            destination = mMap.addCircle(new CircleOptions().
+                    center(dest).
+                    radius(100).
+                    strokeWidth(0f).
+                    fillColor(0x550000FF)).getRadius();
+        }
         if (currentlocation < destination) {
             Log.i("Radius", "Masuk Radius");
             Toast.makeText(ShowLocation.this, "Anda memasuki Radius", Toast.LENGTH_SHORT).show();
             //refresh.setText("Add");
-
-            ValueButton = 1;
             value = true;
 
         } else {
@@ -545,8 +544,11 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         builder.include(dest);
         builder.include(position);
         LatLngBounds bounds = builder.build();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds,50));
-        //mMap.getCameraPosition();
+        if (MarkerValue == 0) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+            //mMap.getCameraPosition();
+            MarkerValue = 1;
+        }
     }
 }
 
