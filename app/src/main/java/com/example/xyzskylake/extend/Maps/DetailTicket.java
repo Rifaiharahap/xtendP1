@@ -1,8 +1,9 @@
 package com.example.xyzskylake.extend.Maps;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,8 +19,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class DetailTicket extends FragmentActivity implements OnMapReadyCallback {
 
+    private ProgressDialog progressDialog;
     private GoogleMap mMap;
     Button Accept;
+
+    /*@Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences preferences = getSharedPreferences("X",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("LastActivty",getClass().getName());
+        editor.commit();
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +42,19 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         Accept = (Button)findViewById(R.id.AcceptTicket);
+        progressDialog = new ProgressDialog(DetailTicket.this);
+        progressDialog.setMessage("Please Wait....");
+        progressDialog.setCancelable(false);
+        progressDialog.setInverseBackgroundForced(false);
 
         Accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailTicket.this, ShowLocation.class));
+                progressDialog.show();
+                Intent ShowMap = new Intent(DetailTicket.this,ShowLocation.class);
+                ShowMap.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(ShowMap);
+
             }
         });
     }

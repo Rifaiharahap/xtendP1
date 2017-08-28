@@ -96,6 +96,7 @@ public class UserProfileDatabase extends DatabaseHelper {
         contentValues.put(UserProfile.USER_COMPANY_NAME, UserProfileModel.getCompany_name());
         contentValues.put(UserProfile.USER_COMPANY_ADDRESS, UserProfileModel.getCompany_address());
 
-        return false;
+        boolean result = (sqLiteDatabase.insert(UserProfile.TABEL_NAME,null,contentValues) > -1);
+        return result;
     }
 }

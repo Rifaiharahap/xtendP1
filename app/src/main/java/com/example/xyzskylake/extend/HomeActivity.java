@@ -1,15 +1,15 @@
 package com.example.xyzskylake.extend;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.xyzskylake.extend.Listview.CustomListview;
 import com.example.xyzskylake.extend.Listview.ListviewProfile;
@@ -17,7 +17,8 @@ import com.example.xyzskylake.extend.Maps.DetailTicket;
 
 public class HomeActivity extends AppCompatActivity {
 
-    ImageView imghome,imghome2,imgtugas,imgtugas2,imgurgent,imgurgent2;
+    ProgressDialog progressDialog;
+    ImageView imghome,imghome2,imgtugas,imgtugas2,imgprofile,imgurgent2;
     ListView lst2;
     ListView lst;
     String[] judul = {"Perbaikan Kabel Jaringan Komputer","Pohon Tumbang","Server Terbakar","Gangguan Jaringan","Keamanan Data Bermassalah"};
@@ -36,11 +37,21 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_main);
 
+
+        progressDialog = new ProgressDialog(HomeActivity.this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.setInverseBackgroundForced(false);
+
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+
         lst2 = (ListView) findViewById(R.id.listprofile);
         ListviewProfile listviewProfile=new ListviewProfile(this,tanda,imagelogo);
         lst2.setAdapter(listviewProfile);
         imgurgent2 = (ImageView)findViewById(R.id.imgurgent2);
-        imgurgent = (ImageView)findViewById(R.id.imgurgent);
+        imgprofile = (ImageView)findViewById(R.id.imgprofile);
         imgtugas = (ImageView)findViewById(R.id.imgtugas);
         imgtugas2 = (ImageView)findViewById(R.id.imgtugas2);
         imghome = (ImageView)findViewById(R.id.imghome);
@@ -52,6 +63,9 @@ public class HomeActivity extends AppCompatActivity {
         CustomListview customListview = new CustomListview(this, judul, keterangan,time);
         lst.setAdapter(customListview);
 
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
 
         imghome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
                     imghome.setVisibility(View.GONE);
                     imgtugas.setVisibility(View.VISIBLE);
                     imgtugas2.setVisibility(View.GONE);
-                    imgurgent.setVisibility(View.VISIBLE);
+                    imgprofile.setVisibility(View.VISIBLE);
                     imgurgent2.setVisibility(View.GONE);
                     person.setVisibility(View.GONE);
 
@@ -81,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
                     imghome.setVisibility(View.VISIBLE);
                     imgtugas.setVisibility(View.GONE);
                     imgtugas2.setVisibility(View.VISIBLE);
-                    imgurgent.setVisibility(View.VISIBLE);
+                    imgprofile.setVisibility(View.VISIBLE);
                     imgurgent2.setVisibility(View.GONE);
                     person.setVisibility(View.GONE);
 
@@ -89,20 +103,19 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
-        imgurgent.setOnClickListener(new View.OnClickListener() {
+        imgprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 home.setVisibility(View.GONE);
                 if (home.getVisibility() == View.GONE) {
-                    profile.setVisibility(View.GONE);
+                    profile.setVisibility(View.VISIBLE);
                     imghome2.setVisibility(View.GONE);
                     imghome.setVisibility(View.VISIBLE);
                     imgtugas.setVisibility(View.VISIBLE);
                     imgtugas2.setVisibility(View.GONE);
-                    imgurgent.setVisibility(View.GONE);
+                    imgprofile.setVisibility(View.GONE);
                     imgurgent2.setVisibility(View.VISIBLE);
                     person.setVisibility(View.VISIBLE);
-
 
                 }
             }
@@ -110,10 +123,10 @@ public class HomeActivity extends AppCompatActivity {
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                progressDialog.show();
+                //Intent showmap = new Intent(HomeActivity.this, DetailTicket)
                 startActivity(new Intent(HomeActivity.this,DetailTicket.class));
             }
         });
-
-
     }
 }

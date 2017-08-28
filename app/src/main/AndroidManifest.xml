@@ -57,7 +57,12 @@
             android:label="@string/title_activity_detail_ticket"
             android:screenOrientation="portrait"/>
         <activity android:name=".InputData"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        <activity
+            android:name=".ProfileActivity"
+
+            />
+        </activity>
     </application>
 
 </manifest>

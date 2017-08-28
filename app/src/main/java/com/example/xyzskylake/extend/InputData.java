@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.xyzskylake.extend.Database.ActionDatabase;
+import com.example.xyzskylake.extend.Model.ActionModel;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,19 +23,25 @@ import java.util.Date;
 
 public class InputData extends AppCompatActivity {
 
+    public ActionDatabase actionDatabase;
+
     Button Btakeimge,BSend;
     EditText ETcomment;
     ImageView IVshowimage;
     LinearLayout LLComment;
     int TAKE_PHOTO_CODE = 0;
     Date now;
+    File newfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_data);
 
+
+        actionDatabase = new ActionDatabase(InputData.this);
         now = new Date();
+        //DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
 
         Btakeimge = (Button)findViewById(R.id.TakeImage);
         BSend = (Button)findViewById(R.id.BSend);
@@ -51,6 +60,15 @@ public class InputData extends AppCompatActivity {
 
                 GetImage();
 
+            }
+        });
+
+        BSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SaveAction();
+                startActivity(new Intent(InputData.this,HomeActivity.class));
             }
         });
     }
@@ -81,7 +99,7 @@ public class InputData extends AppCompatActivity {
             Log.d("CameraDemo", "Pic saved");
 
             String file =  dir + now +".jpg";
-            File newfile = new File(file);
+            newfile = new File(file);
 
             try{
                 FileOutputStream outputStream = new FileOutputStream(newfile);
@@ -91,5 +109,17 @@ public class InputData extends AppCompatActivity {
 
             } catch (IOException e){}
         }
+    }
+
+    private void SaveAction () {
+        String id = "10099";
+        String ticket_id = "10001";
+        String name = "Test";
+        String comment = ETcomment.getText().toString();
+        String photo =  "ljdxfcghj.jpg".toString();
+        Long date = now.getTime();
+        ActionModel actionModel = new ActionModel(id,ticket_id,name,comment,photo,date);
+        Log.i("Action", actionModel.toString());
+        actionDatabase.insert(actionModel);
     }
 }

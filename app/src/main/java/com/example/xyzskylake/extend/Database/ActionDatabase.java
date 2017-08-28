@@ -1,5 +1,6 @@
 package com.example.xyzskylake.extend.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,7 +19,6 @@ public class ActionDatabase extends DatabaseHelper{
     public ActionDatabase(Context context){super(context);}
 
     protected ActionModel actionModel(String where, String[] args, String groupBy, String having, String order, String limit){
-
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(Action.TABEL_ACTION,data,where,args,groupBy,having,order,limit);
         ActionModel model = new ActionModel();
@@ -34,5 +34,18 @@ public class ActionDatabase extends DatabaseHelper{
         return model;
     }
 
+    public boolean insert(ActionModel model){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Action.ACTION_ID, model.getId());
+        contentValues.put(Action.ACTION_TICKET_ID, model.getTicket_id());
+        contentValues.put(Action.ACTION_NAME,model.getName());
+        contentValues.put(Action.ACTION_COMMENT,model.getComment());
+        contentValues.put(Action.ACTION_PHOTO,model.getPhoto());
+        contentValues.put(Action.ACTION_DATE,model.getDate());
+        boolean result;
+        result = (sqLiteDatabase.insert(Action.ACTION_NAME,null,contentValues) > -1);
+        return result;
 
+    }
 }

@@ -65,15 +65,8 @@
     android:layout_marginTop="10dp" />
 
 </RelativeLayout>
-
-
     </RelativeLayout>
-
-
-
-
     <RelativeLayout
-
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -140,10 +133,7 @@
             android:layout_below="@+id/textView3"
             android:layout_centerHorizontal="true" />
 
-
-
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -157,7 +147,7 @@
             android:visibility="visible"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="219dp"
-            android:id="@+id/imgurgent"
+            android:id="@+id/imgprofile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             design:srcCompat="@drawable/ic_action_urgent" />
@@ -206,8 +196,6 @@
             android:layout_height="wrap_content"
             design:srcCompat="@drawable/ic_home2" />
 
-
-
         <ImageView
             android:layout_marginTop="5dp"
             android:layout_marginRight="9dp"
@@ -217,12 +205,7 @@
             design:srcCompat="@drawable/ic_setting"
             android:layout_marginLeft="308dp"/>
 
-
     </RelativeLayout>
-
-
-
-
     <RelativeLayout
         android:visibility="gone"
         android:layout_width="wrap_content"
@@ -289,13 +272,5 @@
             android:layout_below="@+id/person"
             android:layout_alignParentStart="true" />
 
-
-
-
-
     </RelativeLayout>
-
-
-
-
 </RelativeLayout>

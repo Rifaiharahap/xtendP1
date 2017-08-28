@@ -2,8 +2,8 @@ package com.example.xyzskylake.extend;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +20,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*
+        Class<?> activityClass;
+
+        try {
+            SharedPreferences prefs = getSharedPreferences("X", MODE_PRIVATE);
+            activityClass = Class.forName(
+                    prefs.getString("lastActivity", HomeActivity.class.getName()));
+        } catch(ClassNotFoundException ex) {
+            activityClass = HomeActivity.class;
+        }
+        startActivity(new Intent(this, activityClass));*/
+
         txtlogin = (TextView) findViewById(R.id.txtlogin);
         txtsign = (TextView) findViewById(R.id.txtsign);
         login = (LinearLayout)findViewById(R.id.login) ;
@@ -33,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v)
                     {
                         Intent myIntent = new Intent(v.getContext(),HomeActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(myIntent);
                     }
                 }
