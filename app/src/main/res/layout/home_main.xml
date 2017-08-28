@@ -20,24 +20,24 @@
             android:dividerHeight="10px"
             android:layout_width="match_parent"
             android:layout_height="475dp"
-           android:id="@+id/listview"
+            android:id="@+id/listview"
             android:layout_below="@+id/relativeLayout2"
             android:layout_alignParentStart="true" />
 <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="85dp"
-    android:background="#2196F3"
-    android:id="@+id/relativeLayout2">
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="#2196F3"
+        android:id="@+id/relativeLayout2">
 
 <Button
-    android:textColor="#FFFFFF"
-    android:layout_width="180dp"
-    android:layout_height="40dp"
-    android:background="#2196F3"
-    android:text="List"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentStart="true"
-    android:id="@+id/button5" />
+        android:textColor="#FFFFFF"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:background="#2196F3"
+        android:text="List"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/button5" />
 
     <Button
         android:textColor="#FFFFFF"
@@ -50,19 +50,19 @@
         android:id="@+id/button6"/>
 
     <TextView
-    android:layout_marginLeft="120dp"
-    android:fontFamily="sans-serif"
-    android:textStyle="bold"
-    android:textSize="20sp"
-    android:textColor="#FFFFFF"
-    android:layout_gravity="center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Assignment"
-    android:textAlignment="center"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="10dp" />
+        android:layout_marginLeft="120dp"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assignment"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
     </RelativeLayout>
@@ -133,15 +133,15 @@
             android:layout_below="@+id/textView3"
             android:layout_centerHorizontal="true" />
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/menubawah"
-        android:visibility="visible"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="#000000">
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/menubawah"
+            android:visibility="visible"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="#000000">
 
         <ImageView
             android:visibility="visible"
@@ -182,10 +182,10 @@
             android:layout_marginTop="5dp"
             android:visibility="gone"
             android:layout_marginLeft="22dp"
-        android:id="@+id/imghome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        design:srcCompat="@drawable/ic_home" />
+            android:id="@+id/imghome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            design:srcCompat="@drawable/ic_home" />
 
         <ImageView
             android:layout_marginTop="5dp"

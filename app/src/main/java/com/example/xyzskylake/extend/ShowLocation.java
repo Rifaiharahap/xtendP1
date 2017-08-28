@@ -69,7 +69,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     TextView TVduration, TVdistance;
     Button refresh;
     int ValueButton, ValueImage;
-    boolean value;
+    boolean value = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +101,8 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         //lat = 3.575585;
        // lng = 98.682625;
 
-        lat = 3.567406;
-        lng =  98.650107;
+        lat = 3.138580;
+        lng = 101.692916;
         final Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
         // Add a marker in Sydney and move the camera
@@ -245,7 +245,7 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         //mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(latLng.latitude,latLng.longitude)));
 
         onResume();
-        if (value = true){
+        if (value == true){
 
             Intent intent = new Intent(ShowLocation.this,InputData.class);
             double latitude = latLng.latitude;
@@ -515,14 +515,14 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
         destination = mMap.addCircle(new CircleOptions().
                 center(dest).
-                radius(1000).
+                radius(100).
                 strokeWidth(0f).
                 fillColor(0x550000FF)).getRadius();
 
         if (currentlocation < destination) {
             Log.i("Radius", "Masuk Radius");
             Toast.makeText(ShowLocation.this, "Anda memasuki Radius", Toast.LENGTH_SHORT).show();
-            refresh.setText("Add");
+            //refresh.setText("Add");
 
             ValueButton = 1;
             value = true;

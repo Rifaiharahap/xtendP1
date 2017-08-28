@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.xyzskylake.extend.Database.ActionDatabase;
 import com.example.xyzskylake.extend.Model.ActionModel;
@@ -121,5 +122,7 @@ public class InputData extends AppCompatActivity {
         ActionModel actionModel = new ActionModel(id,ticket_id,name,comment,photo,date);
         Log.i("Action", actionModel.toString());
         actionDatabase.insert(actionModel);
+
+        Toast.makeText(InputData.this,"Thank you for your hard work!", Toast.LENGTH_SHORT).show();
     }
 }
