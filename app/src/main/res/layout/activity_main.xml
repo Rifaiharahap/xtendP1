@@ -51,7 +51,7 @@
         android:id="@+id/login"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="350dp"
         android:layout_below="@+id/txtlogin"
         android:layout_centerHorizontal="true">
     <EditText
@@ -84,23 +84,25 @@
         android:layout_centerHorizontal="true" />
 
         <CheckBox
-            android:textSize="16sp"
-            android:layout_marginTop="15dp"
-           android:buttonTint="#BDBDBD"
-            android:textColor="#BDBDBD"
-            android:id="@+id/checkBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Remember Me" />
 
-        <CheckBox
-            android:textSize="16sp"
-            android:buttonTint="#BDBDBD"
-            android:textColor="#BDBDBD"
-            android:id="@+id/checkBox2"
-            android:layout_width="match_parent"
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forget Password ?" />
+            android:layout_marginTop="15dp"
+            android:buttonTint="#BDBDBD"
+            android:text="Remember Me"
+            android:textColor="#BDBDBD"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_marginTop="50dp"
+          android:layout_gravity="center_horizontal"
+            android:id="@+id/forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forget Password ?"
+            android:textColor="#BDBDBD"
+            android:textSize="16sp" />
 
         <Button
 
@@ -110,11 +112,10 @@
             android:layout_height="50dp"
             android:layout_below="@+id/txtpassword"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/buttonshape"
             android:text="Login"
             android:textColor="#9E9E9E" />
-
 
 
 

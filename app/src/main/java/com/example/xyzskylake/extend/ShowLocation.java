@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -64,13 +65,12 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     GoogleApiClient mGoogleApiClient;
     LatLng latLng;
     Location mLastLocation;
-    Marker mCurrLocationMarker,destinationmarker;
+    Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     TextView TVduration, TVdistance;
     Button refresh;
-    int MarkerValue, ValueImage;
-    String distance, duration;
-    boolean value = false;
+    int ValueButton, ValueImage;
+    boolean value = false, ValueMarker = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,14 +96,14 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        MarkerValue = 0;
+        ValueButton = 0;
         ValueImage = 0;
 
-        lat = 3.606497;
-        lng = 98.693252;
+        //lat = 3.575585;
+       // lng = 98.682625;
 
-        //lat = 3.569914;
-        //lng = 98.649731;
+        lat = 3.570209;
+        lng = 98.649728;
         final Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
         // Add a marker in Sydney and move the camera
@@ -116,33 +116,6 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         refresh = (Button) findViewById(R.id.RefreshLocation);
         TVduration = (TextView) findViewById(R.id.Duration);
         TVdistance = (TextView) findViewById(R.id.Distance);
-
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MarkerValue == 0) {
-                    Intent intent = getIntent();
-                    overridePendingTransition(0, 0);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    finish();
-                    overridePendingTransition(0, 0);
-                    startActivity(intent);
-
-                } else if (MarkerValue == 1){
-
-                    MarkerValue = 0;
-                    Intent intent = new Intent(ShowLocation.this,InputData.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    double latitude = latLng.latitude;
-                    double longitude = latLng.longitude;
-                    intent.putExtra("Latitude",latitude);
-                    intent.putExtra("Longitude",longitude);
-                    Log.i("Lat & Long ", "Value " + latitude + " " + longitude);
-                    startActivity(intent);
-
-                }
-            }
-        });
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
@@ -234,17 +207,16 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
 
-        mLastLocation = location;
-        /*if (mCurrLocationMarker != null) {
+        /*mLastLocation = location;
+        if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }*/
         latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Postion(latLng);
-        String TempDistance = distance;
-        String TempDuration = duration;
 
+        Postion(latLng);
         //stop location updates
         //mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(latLng.latitude,latLng.longitude)));
+
         onResume();
         if (value == true){
 
@@ -387,8 +359,8 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
             ArrayList points = null;
             PolylineOptions lineOptions = new PolylineOptions();
             MarkerOptions markerOptions = new MarkerOptions();
-            distance = "";
-            duration = "";
+            String distance = "";
+            String duration = "";
 
             for (int i = 0; i < result.size(); i++) {
                 points = new ArrayList();
@@ -495,31 +467,29 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
 
     private void Postion(LatLng position) {
 
+        LatLng dest = new LatLng(lat, lng);
         //Bitmap iconuser = BitmapFactory.decodeResource(getResources(),R.drawable.gojek);
-        LatLng dest;
-        dest = new LatLng(lat, lng);
-        if (MarkerValue == 0) {
-            MarkerOptions markerOptions = new MarkerOptions().position(position).
-                    title("User Id").
-                    icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            destinationmarker = mMap.addMarker(markerOptions);
+        if (ValueMarker == false) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(position).
+                    title("Nama Orang");
+            //.icon(BitmapDescriptorFactory.fromBitmap(iconuser));
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            mCurrLocationMarker = mMap.addMarker(markerOptions);
 
-            MarkerOptions markerOptions1 = new MarkerOptions().position(dest).
-                    title("Tujuan").
-                    icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            mCurrLocationMarker = mMap.addMarker(markerOptions1);
-
+            markerOptions.position(dest);
+            mCurrLocationMarker = mMap.addMarker(markerOptions);
         }
-            currentlocation = computeDistanceBetween(position, dest);
-            Log.i("temp", "Value " + currentlocation);
+        currentlocation = computeDistanceBetween(position, dest);
 
-        if (MarkerValue == 0) {
+        if(ValueMarker == false) {
             destination = mMap.addCircle(new CircleOptions().
                     center(dest).
-                    radius(100).
+                    radius(75).
                     strokeWidth(0f).
                     fillColor(0x550000FF)).getRadius();
         }
+
         if (currentlocation < destination) {
             Log.i("Radius", "Masuk Radius");
             Toast.makeText(ShowLocation.this, "Anda memasuki Radius", Toast.LENGTH_SHORT).show();
@@ -544,10 +514,19 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
         builder.include(dest);
         builder.include(position);
         LatLngBounds bounds = builder.build();
-        if (MarkerValue == 0) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-            //mMap.getCameraPosition();
-            MarkerValue = 1;
+
+        if (ValueMarker == false){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds,50));
+            /*
+            String ur = "http://maps.google.com/maps?saddr=" + position.latitude + "," + position.longitude +
+                    "&daddr=" + dest.latitude + "," + dest.longitude;
+            Uri gmmIntentUri = Uri.parse(ur);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);*/
+
+            ValueMarker = true;
+        //mMap.getCameraPosition();
         }
     }
 }

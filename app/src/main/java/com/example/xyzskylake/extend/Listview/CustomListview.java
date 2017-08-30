@@ -7,27 +7,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xyzskylake.extend.R;
 
-/**
- * Created by XYZ Skylake on 07/08/2017.
- */
+
 
 public class CustomListview extends ArrayAdapter<String> {
     private String[] judul;
-    private String[] keterangan;
+    private String[] alamat;
     private String[] time;
+    private Integer[] status;
     private Activity context;
-    public CustomListview(Activity context, String[] judul,String[] keterangan, String[] time) {
+    public CustomListview(Activity context, String[] judul,String[] alamat, String[] time,Integer[] status) {
         super(context, R.layout.listview_ticket,judul);
 
 
         this.context=context;
         this.judul=judul;
-        this.keterangan=keterangan;
+        this.alamat=alamat;
         this.time=time;
+        this.status=status;
 
     }
 
@@ -46,8 +47,9 @@ public class CustomListview extends ArrayAdapter<String> {
             viewHolder= (ViewHolder) r.getTag();
         }
         viewHolder.tvw1.setText(judul[position]);
-        viewHolder.tvw2.setText(keterangan[position]);
+        viewHolder.tvw2.setText(alamat[position]);
         viewHolder.tvw3.setText(time[position]);
+        viewHolder.status.setImageResource(status[position]);
         return r;
     }
     class ViewHolder
@@ -55,11 +57,13 @@ public class CustomListview extends ArrayAdapter<String> {
         TextView tvw1;
         TextView tvw2;
         TextView tvw3;
+        ImageView status;
         ViewHolder(View v)
         {
             tvw1 = (TextView) v.findViewById(R.id.judul);
-            tvw2 = (TextView) v.findViewById(R.id.keterangan);
+            tvw2 = (TextView) v.findViewById(R.id.alamat);
             tvw3 = (TextView) v.findViewById(R.id.time);
+            status=(ImageView)v.findViewById(R.id.status);
         }
 
     }

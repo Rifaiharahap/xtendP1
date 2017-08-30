@@ -12,38 +12,38 @@
 
 
         <TextView
-            android:id="@+id/judul"
+            android:id="@+id/judulurgent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Judul"
+            android:text="Perbaikan Jaringan Komputer"
             android:textColor="#000000"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/alamat"
+            android:id="@+id/addressurgent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/judul"
-            android:text="alamat"
+            android:layout_below="@+id/judulurgent"
+            android:text="Jalan Iskandar Muda No.07"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/timeurgent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20:00"
             android:textSize="14sp"
-            android:layout_below="@+id/status"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="31dp" />
+            android:layout_marginEnd="31dp"
+            android:layout_below="@+id/statusurgent"
+            android:layout_alignParentEnd="true" />
 
         <ImageView
-            android:id="@+id/status"
+            android:id="@+id/statusurgent"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/waiting"
-            android:layout_below="@+id/judul"
+            app:srcCompat="@drawable/progres"
+            android:layout_below="@+id/judulurgent"
             android:layout_alignParentEnd="true" />
 
 

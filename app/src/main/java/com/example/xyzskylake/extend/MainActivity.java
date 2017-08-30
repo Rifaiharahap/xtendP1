@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
     TextView txtlogin,txtsign;
     LinearLayout sign,login;
     ImageView RegisterCompany;
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         txtsign = (TextView) findViewById(R.id.txtsign);
         login = (LinearLayout)findViewById(R.id.login) ;
         sign = (LinearLayout)findViewById(R.id.sign);
-        View Button = findViewById(R.id.btnlogin);
+        final View Button = findViewById(R.id.btnlogin);
         RegisterCompany = (ImageView)findViewById(R.id.company);
 
         Button.setOnClickListener(
@@ -45,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     public void onClick(View v)
                     {
+
+                        Button.setBackgroundResource(R.drawable.buttonshape2);
                         Intent myIntent = new Intent(v.getContext(),HomeActivity.class);
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(myIntent);
