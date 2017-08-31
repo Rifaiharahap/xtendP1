@@ -64,7 +64,6 @@ public class ShowLocation extends FragmentActivity implements OnMapReadyCallback
     double lat, lng, currentlocation, destination;
     GoogleApiClient mGoogleApiClient;
     LatLng latLng;
-    Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     TextView TVduration, TVdistance;

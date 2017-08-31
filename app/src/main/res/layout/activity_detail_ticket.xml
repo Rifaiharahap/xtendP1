@@ -74,13 +74,29 @@ android:layout_alignParentEnd="true" />
         android:text="Jalan Pulau Pinang No.1"
         android:layout_marginTop="5dp"/>
 
+    <TextView
+        android:id="@+id/distancelist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance :"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/durationlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duration :" />
+
     <Button
 
         android:layout_gravity="center_horizontal"
         android:id="@+id/AcceptTicket"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/mapbutton"
         android:text="Accept"
         android:textColor="#FFFFFF"
