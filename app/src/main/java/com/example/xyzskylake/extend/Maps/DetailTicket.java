@@ -14,9 +14,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.xyzskylake.extend.InputData;
 import com.example.xyzskylake.extend.R;
 import com.example.xyzskylake.extend.ShowLocation;
 import com.example.xyzskylake.extend.Utils.DirectionsJSONParser;
@@ -30,7 +30,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -49,8 +48,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.google.maps.android.SphericalUtil.computeDistanceBetween;
-
 
 public class DetailTicket extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -64,6 +61,8 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     private GoogleMap mMap;
     Button Accept;
+    TextView TVDistance, TVDuration;
+    double lat, lng;
 
     /*@Override
     protected void onPause() {
@@ -83,7 +82,13 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        lat = 3.570209;
+        lng = 98.649728;
+
         Accept = (Button)findViewById(R.id.AcceptTicket);
+        TVDistance = (TextView)findViewById(R.id.TVDistance);
+        TVDuration = (TextView)findViewById(R.id.TVDuration);
+
         progressDialog = new ProgressDialog(DetailTicket.this);
         progressDialog.setMessage("Please Wait....");
         progressDialog.setCancelable(false);
@@ -288,7 +293,7 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            DetailTicket.ParserTask parserTask = new DetailTicket().ParserTask();
+            DetailTicket.ParserTask parserTask = new ParserTask();
 
 
             parserTask.execute(result);
@@ -360,8 +365,8 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
 
             // Drawing polyline in the Google Map for the i-th route
             Log.i("Distance & Duration", distance + " " + duration);
-            TVdistance.setText("Distance :" + distance );
-            TVduration.setText("Duration : " + duration);
+            TVDistance.setText("Distance : " + distance );
+            TVDuration.setText("Duration : " + duration);
 
             mMap.addPolyline(lineOptions);
         }
@@ -434,7 +439,7 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
 
         LatLng dest = new LatLng(lat, lng);
         //Bitmap iconuser = BitmapFactory.decodeResource(getResources(),R.drawable.gojek);
-        if (ValueMarker == false) {
+        //if (ValueMarker == false) {
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(position).
                     title("Nama Orang");
@@ -442,11 +447,12 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
 
-            markerOptions.position(dest);
-            mCurrLocationMarker = mMap.addMarker(markerOptions);
-        }
-        currentlocation = computeDistanceBetween(position, dest);
-
+            MarkerOptions DistMarker = new MarkerOptions();
+            DistMarker.position(dest).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            mCurrLocationMarker = mMap.addMarker(DistMarker);
+        //}
+        //currentlocation = computeDistanceBetween(position, dest);
+        /*
         if(ValueMarker == false) {
             destination = mMap.addCircle(new CircleOptions().
                     center(dest).
@@ -467,7 +473,7 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
         }
 
         Log.i("BBB", "Jarak " + destination);
-
+        */
         String url = getDirectionsUrl(position, dest);
         DownloadTask downloadTask = new DownloadTask();
 
@@ -480,7 +486,7 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
         builder.include(position);
         LatLngBounds bounds = builder.build();
 
-        if (ValueMarker == false){
+        //if (ValueMarker == false){
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds,50));
             /*
             String ur = "http://maps.google.com/maps?saddr=" + position.latitude + "," + position.longitude +
@@ -490,8 +496,8 @@ public class DetailTicket extends FragmentActivity implements OnMapReadyCallback
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);*/
 
-            ValueMarker = true;
+          //  ValueMarker = true;
             //mMap.getCameraPosition();
-        }
+        //}
     }
 }

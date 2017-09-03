@@ -75,7 +75,7 @@ android:layout_alignParentEnd="true" />
         android:layout_marginTop="5dp"/>
 
     <TextView
-        android:id="@+id/distancelist"
+        android:id="@+id/TVDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Distance :"
@@ -85,7 +85,7 @@ android:layout_alignParentEnd="true" />
     <TextView
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:id="@+id/durationlist"
+        android:id="@+id/TVDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Duration :" />
